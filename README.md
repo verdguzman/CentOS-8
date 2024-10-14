@@ -30,5 +30,6 @@ Bash Script
     gpgcheck=1
     gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-centos8
 
-4. yum update -y
-5. 
+4. rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+5. sudo yum update -y
+6. 
