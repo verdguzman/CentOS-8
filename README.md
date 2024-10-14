@@ -31,5 +31,10 @@ Bash Script
     gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-centos8
 
 4. rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
-5. sudo yum update -y
-6. 
+5. yum clean all
+6. yum makecache
+7. sudo yum update -y
+8. yum install ncurses
+9. yum install mailx
+10. yum install sendmail
+11. yum install postfix
