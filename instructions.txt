@@ -4,6 +4,7 @@
 # Run as OS Container
 2. docker run -it --name script centos:8
 
+# Please follow the command as I have provided below.
 3. once you access the centos 8 using docker container, we need to adjust repository for the /etc/yum.repos.d/ for the following:
   * CentOS-Linux-AppStream.repo
     [appstream]
@@ -34,7 +35,46 @@
 6. yum makecache
 7. sudo yum update -y
 8. yum install ncurses
+
+# Install Mailx to used send and receive emails.
 9. yum install mailx
+
+# Install sendmail to handles the routing delivery of email.
 10. yum install sendmail
+
+# Install postfix it also handles email and routing delivery but with a focus on ease to use, security, and performance. It is often the default Mail Server or Mail Transfer Agent (MTA)
 11. yum install postfix
-12
+
+# You can modify the configuration file by navigating to the path /etc/postfix/main.cf
+12.  uncomment the following:
+     myhostname = <vm_hostname> # Your mail server's hostname (FQDN).
+     mydomain = <vm_hostname> # mydomain: Your domain name.
+     inet_interfaces = all # Configure the IP addresses Postfix will listen to. Set to all to allow all.
+     mynetworks = 192.168.68.0/24, 127.0.0.0/8 #In first line of your IP Addressing, run this command 'ip link'.
+
+     add this configuration below
+     # This is optional and is used if you have a relay server for outbound mail.
+     relayhost = [smtp.gmail.com]:587 #if you already have this command, you may skip
+
+     # Enable SASL authentication
+     smtp_use_tls = yes
+     smtp_sasl_auth_enable = yes
+     smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+     smtp_sasl_security_options = noanonymous
+     smtp_sasl_tls_security_options = noanonymous
+
+# sasl_passwd file stores the username and password for the remote SMTP server (e.g., Gmail). You’ll need to specify the mail relay host and the corresponding credentials.
+13. sudo nano /etc/postfix/sasl_passwd
+
+# Ensure that the 'sasl_passwd' file has the correct permissions so only the root user can access it. This is important to protect your SMTP credentials.
+14. sudo chmod 600 /etc/postfix/sasl_passwd
+
+# Generate the 'sasl_passwd.db' File
+15. sudo postmap /etc/postfix/sasl_passwd
+
+# Reload Postfix Configuration
+16. systemctl restart postfix
+
+# Secure sasl_passwd (Optional but Recommended). To further secure the sasl_passwd file, ensure that only root can access it:
+17. sudo chown root:root /etc/postfix/sasl_passwd
+sudo chmod 600 /etc/postfix/sasl_passwd /etc/postfix/sasl_passwd.db
