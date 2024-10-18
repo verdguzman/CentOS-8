@@ -43,7 +43,7 @@
 10. yum install sendmail
 
 # Install postfix it also handles email and routing delivery but with a focus on ease to use, security, and performance. It is often the default Mail Server or Mail Transfer Agent (MTA)
-11. yum install postfix
+11. yum install postfix && systemctl start postfix && systemctl enable postfix
 
 # You can modify the configuration file by navigating to the path /etc/postfix/main.cf
 12.  uncomment the following:
