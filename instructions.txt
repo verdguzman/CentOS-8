@@ -1,5 +1,7 @@
+#Pull CentOs on DockerHub
 1. docker pull centos:8
 
+# Run as OS Container
 2. docker run -it --name script centos:8
 
 3. once you access the centos 8 using docker container, we need to adjust repository for the /etc/yum.repos.d/ for the following:
@@ -35,3 +37,4 @@
 9. yum install mailx
 10. yum install sendmail
 11. yum install postfix
+12
